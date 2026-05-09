@@ -1,14 +1,11 @@
 import os
-from fastapi import FastAPI
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage
 from langchain_core.runnables import RunnableLambda
-from langserve import add_routes
 
 load_dotenv()
 
-# Configuração
 api_key = os.getenv("API_KEY_GEMINI")
 llm = ChatGoogleGenerativeAI(
     model='gemini-2.5-flash',
@@ -34,10 +31,9 @@ SYSTEM_MSG = SystemMessage(content="""
 """)
 
 def diagnosticar(dados):
-    """Pega qualquer coisa e manda pra LLM"""
+    
     mensagens = [SYSTEM_MSG, HumanMessage(content=f"Interprete estes dados: {dados}")]
     response = llm.invoke(mensagens)
     return {"resposta": response.content}
 
-# Cria o runnable (aceita QUALQUER coisa)
 runnable = RunnableLambda(diagnosticar)

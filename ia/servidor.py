@@ -8,7 +8,8 @@ app = FastAPI()
 add_routes(
     app, 
     runnable, 
-    path="/diagnosticar"
+    path="/diagnosticar",
+    enable_endpoints=["invoke"]
 )
 
 if __name__ == "__main__":
